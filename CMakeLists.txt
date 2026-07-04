@@ -44,7 +44,6 @@ target_link_libraries(rlImGui_custom PUBLIC raylib)
 
 set(SOURCES
     src/main.cpp
-    src/MyLinkedList.cpp
 )
 
 
