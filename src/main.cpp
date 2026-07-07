@@ -130,16 +130,32 @@ private:
                 float dist = ball.getDistance(otherBall);
                 float overlap = radiuses - dist;
 
-                float partBall1 = ball.radius / radiuses;
-                float partBall2 = ball.radius / radiuses;
-
-                ball.position.x -= overlap * partBall1 * dir.x;
-                ball.position.y -= overlap * partBall2 * dir.y;
+                //float partBall1 = ball.radius / radiuses;
+                //float partBall2 = otherBall.radius / radiuses;
 
                 float absVel = ball.getAbsoluteVelocity();
+                float absVel2 = otherBall.getAbsoluteVelocity();
+                float partBall1 = absVel / (absVel + absVel2);
+                float partBall2 = absVel2 / (absVel + absVel2);
+
+                ball.position.x -= overlap * partBall1 * dir.x;
+                ball.position.y -= overlap * partBall1 * dir.y;
+
+                float movedby = sqrtf((overlap * partBall1 * dir.x) * (overlap * partBall1 * dir.x) + (overlap * partBall1 * dir.y) * (overlap * partBall1 * dir.y));
+
 
                 ball.velocity.x = -absVel * ball.bounciness*dir.x;
                 ball.velocity.y = -absVel * ball.bounciness*dir.y;
+
+                std::cout << "################### Collision! ###################\n";
+                std::cout << "Distance: " << dist << "\n";
+                std::cout << "Radiuses " << radiuses << "\n";
+                std::cout << "MyRadiuses " << ball.radius << "\n";
+                std::cout << "Overlap " << overlap << "\n";
+                std::cout << "partBall1: " << partBall1 << "\n";
+                std::cout << "partBall2: " << partBall2 << "\n";
+                std::cout << "Moved by:" << movedby << "\n";
+
             }
         }
     }
@@ -157,15 +173,15 @@ int main() {
     SetTargetFPS(120);
     rlImGuiSetup(true);
 
-    Ball2D ball1 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    Ball2D ball2 = Ball2D({ 585.0f, 400.0f }, {0.0f, -20.0f}, 1.0f, 0.0f, 10.0f);
+    Ball2D ball1 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 100.0f);
+    Ball2D ball2 = Ball2D({ 585.0f, 400.0f }, {0.0f, -200.0f}, 1.0f, 0.0f, 10.0f);
 
     BoundingBallsSimulation sim = BoundingBallsSimulation(screenHeight, screenWidth);
 
-    //sim.addBall(ball1);
-    //sim.addBall(ball2);
+    sim.addBall(ball1);
+    sim.addBall(ball2);
 
-    sim.addBallRandom(100);
+    //sim.addBallRandom(100);
 
     while(!WindowShouldClose()){
         BeginDrawing();
@@ -175,7 +191,7 @@ int main() {
 
         float dt = GetFrameTime();
 
-        sim.update(dt*0.5f);
+        sim.update(dt*0.8f);
 
 
         // -------------------------------------- CODE GOES HERE --------------------------------------
