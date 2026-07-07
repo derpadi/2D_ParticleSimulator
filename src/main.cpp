@@ -37,6 +37,16 @@ typedef struct Ball2D {
         DrawCircleLinesV(position, radius, RED);
     }
 
+    float getAbsoluteVelocity(){
+        return sqrtf(velocity.x*velocity.x + velocity.y*velocity.y);
+    }
+
+    float getDistance(Ball2D &other){
+        float diffX = other.position.x - position.x;
+        float diffY = other.position.y - position.y;
+        return sqrtf(diffX * diffX + diffY * diffY);
+    }
+
 } Ball2D;
 
 
@@ -106,6 +116,32 @@ private:
 
     void checkForCollision(Ball2D &ball){
         checkForWallCollision(ball);
+
+        for(Ball2D &otherBall : balls){
+            if(&ball == &otherBall) continue;
+            if(CheckCollisionCircles(ball.position, ball.radius, otherBall.position, otherBall.radius)){
+                Vector2 dir = { otherBall.position.x - ball.position.x,
+                                otherBall.position.y - ball.position.y  };
+
+                float length = sqrtf(dir.x*dir.x + dir.y * dir.y);
+                dir.x /= length;
+                dir.y /= length;
+                float radiuses = ball.radius + otherBall.radius;
+                float dist = ball.getDistance(otherBall);
+                float overlap = radiuses - dist;
+
+                float partBall1 = ball.radius / radiuses;
+                float partBall2 = ball.radius / radiuses;
+
+                ball.position.x -= overlap * partBall1 * dir.x;
+                ball.position.y -= overlap * partBall2 * dir.y;
+
+                float absVel = ball.getAbsoluteVelocity();
+
+                ball.velocity.x = -absVel * ball.bounciness*dir.x;
+                ball.velocity.y = -absVel * ball.bounciness*dir.y;
+            }
+        }
     }
 
 };
@@ -118,18 +154,18 @@ int main() {
     const int screenWidth = 800;
     const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "C++ refresher");
-    SetTargetFPS(60);
+    SetTargetFPS(120);
     rlImGuiSetup(true);
 
-    Ball2D ball1 = Ball2D({ 300.0f, 200.0f }, {20.0f, 0.0f});
-    Ball2D ball2 = Ball2D({ 300.0f, 200.0f }, {-20.0f, 0.0f});
+    Ball2D ball1 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
+    Ball2D ball2 = Ball2D({ 585.0f, 400.0f }, {0.0f, -20.0f}, 1.0f, 0.0f, 10.0f);
 
     BoundingBallsSimulation sim = BoundingBallsSimulation(screenHeight, screenWidth);
 
     //sim.addBall(ball1);
     //sim.addBall(ball2);
 
-    sim.addBallRandom(2000);
+    sim.addBallRandom(100);
 
     while(!WindowShouldClose()){
         BeginDrawing();
@@ -139,29 +175,7 @@ int main() {
 
         float dt = GetFrameTime();
 
-        // ball1.updateVelocity(dt);
-        // ball1.updatePosition(dt);
-
-        // // Checking for wall collisions
-        // if(ball1.position.y+ball1.radius >= screenHeight){
-        //     ball1.velocity.y *= -ball1.bounciness;
-        //     ball1.position.y = screenHeight-ball1.radius;
-        // } else if(ball1.position.y-ball1.radius <= 0){
-        //     ball1.velocity.y *= -ball1.bounciness;
-        //     ball1.position.y = 0 + ball1.radius;
-        // }
-
-        // if(ball1.position.x-ball1.radius <= 0){
-        //     ball1.velocity.x *= -ball1.bounciness;
-        //     ball1.position.x = 0 + ball1.radius;
-        // } else if(ball1.position.x+ball1.radius >= screenWidth){
-        //     ball1.velocity.x *= -ball1.bounciness;
-        //     ball1.position.x = screenWidth - ball1.radius;
-        // }
-
-        // ball1.draw();
-
-        sim.update(dt);
+        sim.update(dt*0.5f);
 
 
         // -------------------------------------- CODE GOES HERE --------------------------------------
