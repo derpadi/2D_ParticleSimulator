@@ -18,12 +18,9 @@ Application::Application(int width, int height)
     SetTargetFPS(120);
     rlImGuiSetup(true);
 
-    Ball2D ball1 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    Ball2D ball2 = Ball2D({ 400.0f, 400.0f }, {6.0f, -6.0f}, 1.0f, 0.0f, 30.0f);
-
-    ball2.mass = 1000.0f;
-    sim.addBall(ball1);
-    sim.addBall(ball2);
+    input.onLeftClick = [this](Vector2 mousePos){
+        sim.addBall(mousePos, {50.0f, -50.0f}, 3.0f);
+    };
 }
 
 void Application::run()
@@ -34,7 +31,10 @@ void Application::run()
         BeginDrawing();
         ClearBackground(DARKGRAY);
 
+        input.update();
+
         sim.update(dt);
+
         DrawFPS(0,0);
 
         drawUI();

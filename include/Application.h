@@ -1,13 +1,14 @@
 #pragma once
 #include "BouncingBallsSimulation.h"
+#include "InputHandler.h"
 
 class Application {
 
 private:
     float screenHeight;
     float screenWidth;
-
     BoundingBallsSimulation sim;
+    InputHandler input;
 
     void drawUI();
 

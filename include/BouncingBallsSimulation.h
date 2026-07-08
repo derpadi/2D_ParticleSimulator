@@ -14,7 +14,7 @@ public:
     BoundingBallsSimulation(float screenHeight, float screenWidth);
 
     void addBall(Ball2D &ballToAdd);
-    void addBall(Vector2 position, Vector2 velocity);
+    void addBall(Vector2 position, Vector2 velocity, float size = 10.0f);
     void addBallRandom(uint32_t amount);
 
     void update(float dt);

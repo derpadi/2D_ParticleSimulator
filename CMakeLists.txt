@@ -47,6 +47,7 @@ set(SOURCES
     src/Ball2D.cpp
     src/BouncingBallsSimulation.cpp
     src/Application.cpp
+    src/InputHandler.cpp
 )
 
 
