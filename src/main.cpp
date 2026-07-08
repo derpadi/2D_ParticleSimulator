@@ -87,7 +87,7 @@ public:
         std::uniform_real_distribution<float> velDist(-50.0f, 50.0f);
 
         for(uint32_t i = 0; i < amount; i++)
-            balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, 1.0f, 9.81f, 10.0f));
+            balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, 1.0f, 0.0f, 5.0f));
     }
 
     void update(float dt){
@@ -122,48 +122,6 @@ private:
     void checkForCollision(Ball2D &ball){
         checkForWallCollision(ball);
 
-        // for(Ball2D &otherBall : balls){
-        //     if(&ball == &otherBall) continue;
-        //     if(CheckCollisionCircles(ball.position, ball.radius, otherBall.position, otherBall.radius)){
-        //         Vector2 dir = { otherBall.position.x - ball.position.x,
-        //                         otherBall.position.y - ball.position.y  };
-
-        //         float length = sqrtf(dir.x*dir.x + dir.y * dir.y);
-        //         dir.x /= length;
-        //         dir.y /= length;
-        //         float radiuses = ball.radius + otherBall.radius;
-        //         float dist = ball.getDistance(otherBall);
-        //         float overlap = radiuses - dist;
-
-        //         //float partBall1 = ball.radius / radiuses;
-        //         //float partBall2 = otherBall.radius / radiuses;
-
-        //         float absVel = ball.getAbsoluteVelocity();
-        //         float absVel2 = otherBall.getAbsoluteVelocity();
-        //         float partBall1 = absVel / (absVel + absVel2);
-        //         float partBall2 = absVel2 / (absVel + absVel2);
-
-        //         ball.position.x -= overlap * partBall1 * dir.x;
-        //         ball.position.y -= overlap * partBall1 * dir.y;
-
-        //         float movedby = sqrtf((overlap * partBall1 * dir.x) * (overlap * partBall1 * dir.x) + (overlap * partBall1 * dir.y) * (overlap * partBall1 * dir.y));
-
-
-        //         ball.velocity.x = -absVel * ball.bounciness*dir.x;
-        //         ball.velocity.y = -absVel * ball.bounciness*dir.y;
-
-        //         // std::cout << "################### Collision! ###################\n";
-        //         // std::cout << "Distance: " << dist << "\n";
-        //         // std::cout << "Radiuses " << radiuses << "\n";
-        //         // std::cout << "MyRadiuses " << ball.radius << "\n";
-        //         // std::cout << "Overlap " << overlap << "\n";
-        //         // std::cout << "partBall1: " << partBall1 << "\n";
-        //         // std::cout << "partBall2: " << partBall2 << "\n";
-        //         // std::cout << "Moved by:" << movedby << "\n";
-
-        //     }
-        // }
-
         for(Ball2D &otherBall : balls){
             if(&ball == &otherBall) continue;
             if(CheckCollisionCircles(ball.position, ball.radius, otherBall.position, otherBall.radius)){
@@ -190,38 +148,25 @@ private:
                 Vector2 b1_new_norm_vel = { v1new * normal.x, v1new * normal.y};
                 Vector2 b2_new_norm_vel = { v2new * normal.x, v2new * normal.y};
 
+                // Note Tangential speeds remain unchanged
                 Vector2 b1_new_tan_vel = { v1t * tangential.x, v1t * tangential.y};
                 Vector2 b2_new_tan_vel = { v2t * tangential.x, v2t * tangential.y};
 
                 ball.velocity = { b1_new_norm_vel.x + b1_new_tan_vel.x, b1_new_norm_vel.y + b1_new_tan_vel.y };
                 otherBall.velocity = { b2_new_norm_vel.x + b2_new_tan_vel.x, b2_new_norm_vel.y + b2_new_tan_vel.y };
 
-
-
-                // Resolve Position problem
-
+                // Resolve superposition
                 float overlap = (ball.radius + otherBall.radius) - distance;
 
                 float ball1_part = (1.0f/ball.mass)/((1.0f/ball.mass) + (1.0f/otherBall.mass));
                 float ball2_part = (1.0f/otherBall.mass)/((1.0f/ball.mass) + (1.0f/otherBall.mass));
 
+                // Correct balls positions
                 ball.position.x -= ball1_part * overlap * normal.x;
                 ball.position.y -= ball1_part * overlap * normal.y;
 
-                float b1movX = -ball1_part * overlap * normal.x;
-                float b1movY = -ball1_part * overlap * normal.y;
-
                 otherBall.position.x += ball2_part * overlap * normal.x;
                 otherBall.position.y += ball2_part * overlap * normal.y;
-
-                float b2movX = ball2_part * overlap * normal.x;
-                float b2movY = ball2_part * overlap * normal.y;
-
-                float newOverlap = (ball.radius + otherBall.radius) - ball.getDistance(otherBall);
-
-                int x = 1;
-
-
             }
         }
     }
@@ -240,30 +185,17 @@ int main() {
     rlImGuiSetup(true);
 
     Ball2D ball1 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    Ball2D ball2 = Ball2D({ 400.0f, 400.0f }, {6.0f, -6.0f}, 1.0f, 9.81f, 30.0f);
-    //Ball2D ball2 = Ball2D({ 400.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
+    Ball2D ball2 = Ball2D({ 400.0f, 400.0f }, {6.0f, -6.0f}, 1.0f, 0.0f, 30.0f);
 
 
-    // Ball2D ball1 = Ball2D({ 100.0f, 200.0f }, {20.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    // Ball2D ball2 = Ball2D({ 200.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    // Ball2D ball3 = Ball2D({ 300.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    // Ball2D ball4 = Ball2D({ 400.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    // Ball2D ball5 = Ball2D({ 500.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-    // Ball2D ball6 = Ball2D({ 600.0f, 200.0f }, {0.0f, 0.0f}, 1.0f, 0.0f, 10.0f);
-
-    ball2.mass = 80.0f;
+    ball2.mass = 1000.0f;
 
     BoundingBallsSimulation sim = BoundingBallsSimulation(screenHeight, screenWidth);
 
     sim.addBall(ball1);
     sim.addBall(ball2);
-    // sim.addBall(ball3);
-    // sim.addBall(ball4);
-    // sim.addBall(ball5);
-    // sim.addBall(ball6);
-
-
-    sim.addBallRandom(200);
+    
+    //sim.addBallRandom(100);
 
     while(!WindowShouldClose()){
         BeginDrawing();
