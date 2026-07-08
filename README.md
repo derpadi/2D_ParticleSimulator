@@ -47,6 +47,9 @@ Note: It might take some while to download dependencies!
 ## 🎮 Controls
 | Input | Action |
 | :--- | :--- |
+| **Keyboard A** | "Arm/Disarm" the mouse interaction |
+| **Keyboard UP** | Increase particle size |
+| **Keyboard DOWN** | Decrease particle size |
 | **Left Click** | Spawn a ball at mouse position |
 | **Spacebar** | Instantly spawn 10 balls at random locations |
 

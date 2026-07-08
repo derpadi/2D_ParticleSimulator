@@ -2,9 +2,9 @@
 #include <random>
 
 
-BoundingBallsSimulation::BoundingBallsSimulation(float screenHeight, float screenWidth){
-    this->screenHeight = screenHeight;
-    this->screenWidth = screenWidth;
+BoundingBallsSimulation::BoundingBallsSimulation(float screenHeight, float screenWidth)
+:screenHeight(screenHeight), screenWidth(screenWidth){
+
 }
 
 void BoundingBallsSimulation::addBall(Ball2D &ballToAdd){
@@ -19,12 +19,11 @@ void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float 
 
 void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis)
 {
-    Ball2D ball = Ball2D(position, velocity, bounciness, gravity, size, color, vis);
-    ball.mass = mass;
+    Ball2D ball = Ball2D(position, velocity, mass, bounciness, gravity, size, color, vis);
     balls.push_back(ball);
 }
 
-void BoundingBallsSimulation::addBallRandom(uint32_t amount){
+void BoundingBallsSimulation::addBallRandom(uint32_t amount, float mass, float size){
     static std::random_device rd;
     static std::mt19937 gen(rd());
 
@@ -34,7 +33,7 @@ void BoundingBallsSimulation::addBallRandom(uint32_t amount){
     std::uniform_real_distribution<float> velDist(-50.0f, 50.0f);
 
     for(uint32_t i = 0; i < amount; i++)
-        balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, 1.0f, 0.0f, 5.0f, RED, true));
+        balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, mass, 1.0f, 0.0f, size, RED, true));
 }
 
 void BoundingBallsSimulation::update(float dt){

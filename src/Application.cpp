@@ -7,16 +7,15 @@ void Application::drawUI()
     rlImGuiBegin();
     ImGui::Begin("Simulation Telemetry");
     ImGui::Text("#Particles: %zu", sim.getParticleCount());
-
     if(input.getArmed()){
         ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "ARMED");
     } else {
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "DISARMED");
     }
-    ImGui::SliderFloat("ballsize", &currentBallSize, 0, 100);
-    ImGui::SliderFloat("mass", &currentBallMass, 0, 100);
-    ImGui::SliderFloat("vx", &currentBallVx, -100, 100);
-    ImGui::SliderFloat("vy", &currentBallVy, -100, 100);
+    ImGui::SliderFloat("Ballsize", &currentBallSize, 0, 100);
+    ImGui::SliderFloat("Mass", &currentBallMass, 0, 100);
+    ImGui::SliderFloat("Speed(x)", &currentBallVx, -100, 100);
+    ImGui::SliderFloat("Speed(y)", &currentBallVy, -100, 100);
     ImGui::End();
     rlImGuiEnd();
 }
@@ -37,7 +36,7 @@ Application::Application(int width, int height)
 
     input.onSpacePressed = [this](){
         if(input.getArmed()){
-            sim.addBallRandom(10);
+            sim.addBallRandom(10, currentBallMass, currentBallSize);
         }
     };
 

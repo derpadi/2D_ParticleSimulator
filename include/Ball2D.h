@@ -12,7 +12,7 @@ typedef struct Ball2D {
     float mass = 1.0f; // Mass in kg, used for collision calculations
     bool visible = true;
 
-    Ball2D(Vector2 position, Vector2 velocity, float bounciness = 1.0f, float gravity = 9.81, float radius = 10.0f, Color color = RED, bool visible = true);
+    Ball2D(Vector2 position, Vector2 velocity, float mass = 1.0f,float bounciness = 1.0f, float gravity = 9.81, float radius = 10.0f, Color color = RED, bool visible = true);
 
     void updateVelocity(float dt);
 
@@ -20,8 +20,8 @@ typedef struct Ball2D {
 
     void draw();
 
-    float getAbsoluteVelocity();
+    float getAbsoluteVelocity() const;
 
-    float getDistance(Ball2D &other);
+    float getDistance(const Ball2D &other) const;
 
 } Ball2D;

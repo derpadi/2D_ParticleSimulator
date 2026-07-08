@@ -1,14 +1,9 @@
 #include "Ball2D.h"
 #include <cmath>
 
-Ball2D::Ball2D(Vector2 position, Vector2 velocity, float bounciness, float gravity, float radius, Color color, bool visible){
-    this->position = position;
-    this->velocity = velocity;
-    this->bounciness = bounciness;
-    this->gravity = gravity;
-    this->radius = radius;
-    this->color = color;
-    this->visible = visible;
+Ball2D::Ball2D(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float radius, Color color, bool visible)
+:position(position), velocity(velocity), mass(mass), bounciness(bounciness), gravity(gravity), radius(radius), color(color), visible(visible)
+{
 }
 
 void Ball2D::updateVelocity(float dt){
@@ -30,11 +25,11 @@ void Ball2D::draw(){
     }
 }
 
-float Ball2D::getAbsoluteVelocity(){
+float Ball2D::getAbsoluteVelocity() const {
     return sqrtf(velocity.x*velocity.x + velocity.y*velocity.y);
 }
 
-float Ball2D::getDistance(Ball2D &other){
+float Ball2D::getDistance(const Ball2D &other) const{
     float diffX = other.position.x - position.x;
     float diffY = other.position.y - position.y;
     return sqrtf(diffX * diffX + diffY * diffY);
