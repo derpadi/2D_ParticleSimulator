@@ -44,6 +44,9 @@ target_link_libraries(rlImGui_custom PUBLIC raylib)
 
 set(SOURCES
     src/main.cpp
+    src/Ball2D.cpp
+    src/BouncingBallsSimulation.cpp
+    src/Application.cpp
 )
 
 
