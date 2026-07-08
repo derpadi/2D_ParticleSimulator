@@ -17,6 +17,13 @@ void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float 
     balls.push_back(ball);
 }
 
+void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis)
+{
+    Ball2D ball = Ball2D(position, velocity, bounciness, gravity, size, color, vis);
+    ball.mass = mass;
+    balls.push_back(ball);
+}
+
 void BoundingBallsSimulation::addBallRandom(uint32_t amount){
     static std::random_device rd;
     static std::mt19937 gen(rd());

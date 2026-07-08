@@ -10,6 +10,11 @@ private:
     BoundingBallsSimulation sim;
     InputHandler input;
 
+    float currentBallSize = 10.f;
+    float currentBallMass = 1.0f;
+    float currentBallVx = 10.0f;
+    float currentBallVy = -10.0f;
+
     void drawUI();
 
 public:

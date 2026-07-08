@@ -1,8 +1,9 @@
 #include "InputHandler.h"
+#include <iostream>
 
 void InputHandler::update()
 {
-    if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
         if(onLeftClick){
             onLeftClick(GetMousePosition());
         }
@@ -13,4 +14,24 @@ void InputHandler::update()
             onSpacePressed();
         }
     }
+
+    if(IsKeyPressed(KEY_UP)){
+        if(onUpPressed){
+            onUpPressed();
+        }
+    }
+
+    if(IsKeyPressed(KEY_DOWN)){
+        if(onDownPressed){
+            onDownPressed();
+        }
+    }
+
+    if(IsKeyPressed(KEY_A)){
+        std::cout << "Pressed" << std::endl;
+        if(onAPressed){
+            onAPressed();
+        }
+    }
+
 }
