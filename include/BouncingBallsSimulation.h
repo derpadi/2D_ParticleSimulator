@@ -19,6 +19,10 @@ public:
 
     void update(float dt);
 
+    size_t getParticleCount() const{
+        return balls.size();
+    }
+
 private:
 
     void checkForWallCollision(Ball2D &ball);

@@ -39,6 +39,7 @@ void BoundingBallsSimulation::update(float dt){
     }
 }
 
+
 void BoundingBallsSimulation::checkForWallCollision(Ball2D &ball){
     if(ball.position.y+ball.radius >= screenHeight){
         ball.velocity.y *= -ball.bounciness;

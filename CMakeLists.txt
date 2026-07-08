@@ -51,6 +51,6 @@ set(SOURCES
 )
 
 
-add_executable(CPP_Refresher ${SOURCES})
-target_include_directories(CPP_Refresher PRIVATE include)
-target_link_libraries(CPP_Refresher PRIVATE raylib rlImGui_custom)
+add_executable(2D_ParticleSimulation ${SOURCES})
+target_include_directories(2D_ParticleSimulation PRIVATE include)
+target_link_libraries(2D_ParticleSimulation PRIVATE raylib rlImGui_custom)

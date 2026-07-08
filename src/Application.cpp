@@ -5,8 +5,8 @@
 void Application::drawUI()
 {
     rlImGuiBegin();
-    ImGui::Begin("Hello, world!");
-    ImGui::Text("This in my control panel!");
+    ImGui::Begin("Simulation Telemetry");
+    ImGui::Text("#Particles: %zu", sim.getParticleCount());
     ImGui::End();
     rlImGuiEnd();
 }
@@ -20,6 +20,10 @@ Application::Application(int width, int height)
 
     input.onLeftClick = [this](Vector2 mousePos){
         sim.addBall(mousePos, {50.0f, -50.0f}, 3.0f);
+    };
+
+    input.onSpacePressed = [this](){
+        sim.addBallRandom(10);
     };
 }
 
