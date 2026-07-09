@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 
-typedef struct Ball2D {
+struct Ball2D {
     Vector2 position;
     Vector2 velocity;
 
@@ -37,4 +37,4 @@ typedef struct Ball2D {
 
     float getDistance(const Ball2D &other) const;
 
-} Ball2D;
+};

@@ -15,6 +15,7 @@ A 2D ridgid-body physics simulation built to explore and refresh modern C++ conc
 ## Features so far
 * **Accurate 2D Physics:** Gravity, wall collisions, particle collisions, superposition resolution (mass based)
 * **Event-Driven Inputs:** Lambda-based input handler
+* **Rainbow Mode:** Cycle through a set of colors
 
 ## 🚀 Getting Started
 
@@ -48,9 +49,11 @@ Note: It might take some while to download dependencies!
 | Input | Action |
 | :--- | :--- |
 | **Keyboard A** | "Arm/Disarm" the mouse interaction |
+| **Keyboard C** | Clear the scene |
 | **Keyboard UP** | Increase particle size |
 | **Keyboard DOWN** | Decrease particle size |
 | **Left Click** | Spawn a ball at mouse position |
+| **Left Click Hold** | Spam-Mode with set frequency |
 | **Spacebar** | Instantly spawn 10 balls at random locations |
 
 ---

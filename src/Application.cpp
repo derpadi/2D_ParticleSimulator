@@ -18,6 +18,7 @@ void Application::drawUI()
     ImGui::SliderFloat("Speed(y)", &currentBallVy, -20, 20);
     ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
     ImGui::SliderFloat("Friction", &currentBallDrag, 0, 10);
+    ImGui::Checkbox("Rainbow Mode", &rainbowMode);
     ImGui::End();
     rlImGuiEnd();
 }
@@ -32,7 +33,7 @@ Application::Application(int width, int height)
     input.onLeftClick = [this](Vector2 mousePos){
         if(input.getArmed()){
             input.cooldown = 1.0/input.interval;
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
         }
     };
 
@@ -62,7 +63,7 @@ Application::Application(int width, int height)
     input.onLeftHold = [this](Vector2 mousePos, float dt){
         input.cooldown -= dt;
         if(input.cooldown <= 0.0f && input.getArmed()){
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
             input.cooldown = 1.0f/input.interval;
         }
     };
@@ -86,6 +87,16 @@ void Application::run()
 
         EndDrawing();
     }
+}
+
+Color Application::getColor()
+{
+    if(rainbowMode){
+        static const std::array<Color, 7> colors = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, PINK };
+        static size_t currentIndex = 0;
+        return colors[currentIndex++ % colors.size()];
+    }
+    return RED;
 }
 
 Application::~Application()

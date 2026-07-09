@@ -16,6 +16,8 @@ private:
     float currentBallVy = -10.0f;
     float currentBallDrag = 0.0f;
 
+    bool rainbowMode = true;
+
     void drawUI();
 
 public:
@@ -23,6 +25,7 @@ public:
     ~Application();
 
     void run();
+    Color getColor();
 
 
 };

@@ -9,6 +9,8 @@ class BoundingBallsSimulation{
     float screenHeight;
     float screenWidth;
 
+    bool rainbowMode = false;
+
 
 public:
     BoundingBallsSimulation(float screenHeight, float screenWidth);
