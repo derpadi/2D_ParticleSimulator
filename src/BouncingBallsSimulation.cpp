@@ -36,6 +36,11 @@ void BoundingBallsSimulation::addBallRandom(uint32_t amount, float mass, float s
         balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, mass, 1.0f, 0.0f, size, RED, true));
 }
 
+void BoundingBallsSimulation::clear()
+{
+    balls.clear();
+}
+
 void BoundingBallsSimulation::update(float dt){
     for(Ball2D &ball : balls){
         ball.updateVelocity(dt);

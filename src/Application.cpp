@@ -16,6 +16,7 @@ void Application::drawUI()
     ImGui::SliderFloat("Mass", &currentBallMass, 0, 100);
     ImGui::SliderFloat("Speed(x)", &currentBallVx, -100, 100);
     ImGui::SliderFloat("Speed(y)", &currentBallVy, -100, 100);
+    ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
     ImGui::End();
     rlImGuiEnd();
 }
@@ -52,6 +53,18 @@ Application::Application(int width, int height)
     input.onAPressed = [this](){
         input.toggleArmed();
     };
+
+    input.onCPressed = [this](){
+        sim.clear();
+    };
+
+    input.onLeftHold = [this](Vector2 mousePos, float dt){
+        input.cooldown -= dt;
+        if(input.cooldown <= 0.0f && input.getArmed()){
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true);
+            input.cooldown = 1.0f/input.interval;
+        }
+    };
 }
 
 void Application::run()
@@ -62,7 +75,7 @@ void Application::run()
         BeginDrawing();
         ClearBackground(DARKGRAY);
 
-        input.update();
+        input.update(dt);
 
         sim.update(dt);
 
