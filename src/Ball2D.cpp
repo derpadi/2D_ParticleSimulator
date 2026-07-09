@@ -1,16 +1,38 @@
 #include "Ball2D.h"
 #include <cmath>
 
-Ball2D::Ball2D(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float radius, Color color, bool visible)
-:position(position), velocity(velocity), mass(mass), bounciness(bounciness), gravity(gravity), radius(radius), color(color), visible(visible)
+#include <iostream>
+
+Ball2D::Ball2D(
+    Vector2 position, 
+    Vector2 velocity, 
+    float mass, 
+    float bounciness, 
+    float gravity, 
+    float radius, 
+    Color color, 
+    bool visible,
+    float drag)
+:
+position(position), 
+velocity(velocity), 
+mass(mass), 
+bounciness(bounciness), 
+gravity(gravity), 
+radius(radius), 
+color(color), 
+visible(visible),
+drag(drag)
 {
 }
 
 void Ball2D::updateVelocity(float dt){
     velocity.y += gravity * dt;
 
-    //velocity.x *= 0.99f; // Friction
-    //velocity.y *= 0.99f; // Friction
+    float damping = expf(-drag * dt);
+
+    velocity.x *= damping;
+    velocity.y *= damping;
 }
 
 void Ball2D::updatePosition(float dt){
@@ -21,7 +43,7 @@ void Ball2D::updatePosition(float dt){
 void Ball2D::draw(){
     //DrawCircleLinesV(position, radius, RED);
     if (visible) {
-        DrawCircleV(position, radius, { 255, 0, 0, 255 });
+        DrawCircleV(position, radius, color);
     }
 }
 

@@ -14,9 +14,10 @@ void Application::drawUI()
     }
     ImGui::SliderFloat("Ballsize", &currentBallSize, 0, 100);
     ImGui::SliderFloat("Mass", &currentBallMass, 0, 100);
-    ImGui::SliderFloat("Speed(x)", &currentBallVx, -100, 100);
-    ImGui::SliderFloat("Speed(y)", &currentBallVy, -100, 100);
+    ImGui::SliderFloat("Speed(x)", &currentBallVx, -20, 20);
+    ImGui::SliderFloat("Speed(y)", &currentBallVy, -20, 20);
     ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
+    ImGui::SliderFloat("Friction", &currentBallDrag, 0, 10);
     ImGui::End();
     rlImGuiEnd();
 }
@@ -30,8 +31,8 @@ Application::Application(int width, int height)
 
     input.onLeftClick = [this](Vector2 mousePos){
         if(input.getArmed()){
-            //sim.addBall(mousePos, {50.0f, -50.0f}, currentBallSize);
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true);
+            input.cooldown = 1.0/input.interval;
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true, currentBallDrag);
         }
     };
 
@@ -61,7 +62,7 @@ Application::Application(int width, int height)
     input.onLeftHold = [this](Vector2 mousePos, float dt){
         input.cooldown -= dt;
         if(input.cooldown <= 0.0f && input.getArmed()){
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, RED, true, currentBallDrag);
             input.cooldown = 1.0f/input.interval;
         }
     };

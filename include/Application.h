@@ -14,6 +14,7 @@ private:
     float currentBallMass = 1.0f;
     float currentBallVx = 10.0f;
     float currentBallVy = -10.0f;
+    float currentBallDrag = 0.0f;
 
     void drawUI();
 

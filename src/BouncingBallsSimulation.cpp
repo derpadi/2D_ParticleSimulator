@@ -17,9 +17,9 @@ void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float 
     balls.push_back(ball);
 }
 
-void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis)
+void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis, float drag)
 {
-    Ball2D ball = Ball2D(position, velocity, mass, bounciness, gravity, size, color, vis);
+    Ball2D ball = Ball2D(position, velocity, mass, bounciness, gravity, size, color, vis, drag);
     balls.push_back(ball);
 }
 

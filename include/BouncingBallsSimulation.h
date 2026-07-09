@@ -15,7 +15,7 @@ public:
 
     void addBall(Ball2D &ballToAdd);
     void addBall(Vector2 position, Vector2 velocity, float size = 10.0f);
-    void addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis);
+    void addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis, float drag);
     void addBallRandom(uint32_t amount, float mass = 1.0f, float size = 10.0f);
 
     void clear();
