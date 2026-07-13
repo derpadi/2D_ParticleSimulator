@@ -17,11 +17,24 @@ public:
     float cooldown = 0.0f;
 
 
+    /**
+     * @brief Updates the input handler based on the time step.
+     * @param dt The time step in seconds.
+     */
     void update(float dt);
+
+    /**
+     * @brief Toggles the armed state. (Arming mouse interaction)
+     */
     void toggleArmed(){
         armed = !armed;
     }
-    bool getArmed(){
+
+    /**
+     * @brief Checks if the input handler is armed.
+     * @return True if armed, false otherwise.
+     */
+    bool isArmed(){
         return armed;
     }
 

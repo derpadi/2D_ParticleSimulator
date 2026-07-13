@@ -7,7 +7,7 @@ void Application::drawUI()
     rlImGuiBegin();
     ImGui::Begin("Simulation Telemetry");
     ImGui::Text("#Particles: %zu", sim.getParticleCount());
-    if(input.getArmed()){
+    if(input.isArmed()){
         ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "ARMED");
     } else {
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "DISARMED");
@@ -31,14 +31,14 @@ Application::Application(int width, int height)
     rlImGuiSetup(true);
 
     input.onLeftClick = [this](Vector2 mousePos){
-        if(input.getArmed()){
+        if(input.isArmed()){
             input.cooldown = 1.0/input.interval;
             sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
         }
     };
 
     input.onSpacePressed = [this](){
-        if(input.getArmed()){
+        if(input.isArmed()){
             sim.addBallRandom(10, currentBallMass, currentBallSize);
         }
     };
@@ -62,7 +62,7 @@ Application::Application(int width, int height)
 
     input.onLeftHold = [this](Vector2 mousePos, float dt){
         input.cooldown -= dt;
-        if(input.cooldown <= 0.0f && input.getArmed()){
+        if(input.cooldown <= 0.0f && input.isArmed()){
             sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
             input.cooldown = 1.0f/input.interval;
         }

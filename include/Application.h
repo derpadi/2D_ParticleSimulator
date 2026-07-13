@@ -18,13 +18,26 @@ private:
 
     bool rainbowMode = true;
 
+    /**
+     * @brief Draws the UI (ImGui) elements on the screen.
+     */
     void drawUI();
 
 public:
     Application(int width = 800, int height = 600);
     ~Application();
 
+    /**
+     * @brief Runs the application.
+     */
     void run();
+    /**
+     * @brief Gets the color for the balls.
+     * 
+     * Random color is generated if rainbowMode is enabled, otherwise RED is returned currently.
+     * 
+     * @return The color.
+     */
     Color getColor();
 
 

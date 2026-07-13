@@ -27,14 +27,34 @@ struct Ball2D {
         float drag = 0.0f
     );
 
+    /**
+     * @brief Updates the ball's position and velocity based on the time step.
+     * @param dt The time step in seconds.
+     */
     void updateVelocity(float dt);
 
+    /**
+     * @brief Updates the ball's position based on the time step.
+     * @param dt The time step in seconds.
+     */
     void updatePosition(float dt);
 
+    /**
+     * @brief Draws the ball on the screen.
+     */
     void draw();
 
+    /**
+     * @brief Gets the absolute velocity of the ball.
+     * @return The absolute velocity.
+     */
     float getAbsoluteVelocity() const;
 
+    /**
+     * @brief Gets the distance to another ball.
+     * @param other The other ball.
+     * @return The distance.
+     */
     float getDistance(const Ball2D &other) const;
 
 };

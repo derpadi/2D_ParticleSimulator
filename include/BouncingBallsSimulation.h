@@ -13,6 +13,12 @@ class BoundingBallsSimulation{
 
 
 public:
+    /**
+     * @brief Constructs a new Bounding Balls Simulation object.
+     * 
+     * @param screenHeight The height of the simulation screen.
+     * @param screenWidth The width of the simulation screen.
+     */
     BoundingBallsSimulation(float screenHeight, float screenWidth);
 
     void addBall(Ball2D &ballToAdd);
@@ -22,15 +28,35 @@ public:
 
     void clear();
 
+    /**
+     * @brief Updates the simulation based on a time step.
+     * 
+     * @param dt The time step in seconds.
+     */
     void update(float dt);
 
+    /**
+     * @brief Gets the number of balls in the simulation.
+     * 
+     * @return The number of balls.
+     */
     size_t getParticleCount() const{
         return balls.size();
     }
 
 private:
 
+    /**
+     * @brief Checks for collisions with the walls.
+     * 
+     * @param ball The ball to check.
+     */
     void checkForWallCollision(Ball2D &ball);
+    /**
+     * @brief Checks for collisions with other balls.
+     * 
+     * @param ball The ball to check.
+     */
     void checkForCollision(Ball2D &ball);
 
 };
