@@ -28,7 +28,7 @@ FetchContent_MakeAvailable(imgui)
 FetchContent_Declare(
     rlImGui
     GIT_REPOSITORY https://github.com/raylib-extras/rlImGui.git
-    GIT_TAG main
+    GIT_TAG Raylib_6_0
 )
 FetchContent_MakeAvailable(rlImGui)
 
