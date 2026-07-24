@@ -31,7 +31,7 @@ struct Ball2D {
      * @brief Updates the ball's position and velocity based on the time step.
      * @param dt The time step in seconds.
      */
-    void updateVelocity(float dt, bool mouseGravity = false, Vector2 mousePos = { 0,0 });
+    void updateVelocity(float dt);
 
     /**
      * @brief Updates the ball's position based on the time step.

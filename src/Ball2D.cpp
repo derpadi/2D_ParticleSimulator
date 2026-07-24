@@ -26,7 +26,7 @@ drag(drag)
 {
 }
 
-void Ball2D::updateVelocity(float dt, bool mouseGravity, Vector2 mousePos){    
+void Ball2D::updateVelocity(float dt){    
     velocity.y += gravity * dt;
 
     float damping = expf(-drag * dt);
