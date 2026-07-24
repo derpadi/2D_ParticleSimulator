@@ -17,6 +17,7 @@ private:
     float currentBallDrag = 0.0f;
 
     bool rainbowMode = true;
+    bool mouseGravity = false;
 
     /**
      * @brief Draws the UI (ImGui) elements on the screen.

@@ -19,6 +19,7 @@ void Application::drawUI()
     ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
     ImGui::SliderFloat("Friction", &currentBallDrag, 0, 10);
     ImGui::Checkbox("Rainbow Mode", &rainbowMode);
+    ImGui::Checkbox("Mouse Gravity", &mouseGravity);
     ImGui::End();
     rlImGuiEnd();
 }
