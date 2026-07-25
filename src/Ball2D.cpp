@@ -35,6 +35,19 @@ void Ball2D::updateVelocity(float dt){
     velocity.y *= damping;
 }
 
+void Ball2D::updateVelocityWithGravitationalCenter(float dt, Vector2 gravitationalCenter, float gravitationalConstant)
+{
+    Vector2 dir = { gravitationalCenter.x - position.x, gravitationalCenter.y - position.y };
+    float distanceSquared = dir.x * dir.x + dir.y * dir.y;
+    float distance = sqrtf(distanceSquared);
+
+    if (distance > 0.0f) {
+        float forceMagnitude = gravitationalConstant * mass / distanceSquared;
+        velocity.x += forceMagnitude * dir.x / distance * dt;
+        velocity.y += forceMagnitude * dir.y / distance * dt;
+    }
+}
+
 void Ball2D::updatePosition(float dt){
     position.x += velocity.x * dt * scale;
     position.y += velocity.y * dt * scale;

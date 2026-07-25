@@ -33,6 +33,8 @@ struct Ball2D {
      */
     void updateVelocity(float dt);
 
+    void updateVelocityWithGravitationalCenter(float dt, Vector2 gravitationalCenter, float gravitationalConstant);
+
     /**
      * @brief Updates the ball's position based on the time step.
      * @param dt The time step in seconds.
