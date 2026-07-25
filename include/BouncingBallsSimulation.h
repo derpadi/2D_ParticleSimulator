@@ -29,7 +29,7 @@ public:
     void clear();
 
     /**
-     * @brief Updates the simulation based on a time step.
+     * @brief Updates the simulation based on a time step. (1. Update ball-state/wall collisions, 2. Ball/Ball collisions, 3. Draw)
      * 
      * @param dt The time step in seconds.
      */
@@ -55,8 +55,17 @@ private:
     /**
      * @brief Checks for collisions with other balls.
      * 
+     * @note Deprecated! Not used anymore!
+     * 
      * @param ball The ball to check.
      */
     void checkForCollision(Ball2D &ball);
 
+    /**
+     * @brief Resolves the collision between two balls.
+     * 
+     * @param ball1 The first ball.
+     * @param ball2 The second ball.
+     */
+    void resolveCollision(Ball2D &ball1, Ball2D &ball2);
 };

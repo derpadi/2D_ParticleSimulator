@@ -42,11 +42,23 @@ void BoundingBallsSimulation::clear()
 }
 
 void BoundingBallsSimulation::update(float dt){
-    for(Ball2D &ball : balls){
-        ball.updateVelocity(dt);
-        ball.updatePosition(dt);
-        checkForCollision(ball);
-        ball.draw();
+    // Update balls and correct for wall collisions
+    for(std::size_t i = 0; i < balls.size(); i++){
+        balls[i].updateVelocity(dt);
+        balls[i].updatePosition(dt);
+        checkForWallCollision(balls[i]);
+    }
+
+    // Ball/Ball check
+    for(std::size_t i = 0; i < balls.size(); i++){
+        for(std::size_t j = i+1; j < balls.size(); j++){
+            resolveCollision(balls[i], balls[j]);
+        }
+    }
+
+    // Draw
+    for(std::size_t i = 0; i < balls.size(); i++){
+        balls[i].draw();
     }
 }
 
@@ -71,6 +83,8 @@ void BoundingBallsSimulation::checkForWallCollision(Ball2D &ball){
 
 void BoundingBallsSimulation::checkForCollision(Ball2D &ball){
     checkForWallCollision(ball);
+
+
 
     for(Ball2D &otherBall : balls){
         if(&ball == &otherBall) continue;
@@ -118,5 +132,52 @@ void BoundingBallsSimulation::checkForCollision(Ball2D &ball){
             otherBall.position.x += ball2_part * overlap * normal.x;
             otherBall.position.y += ball2_part * overlap * normal.y;
         }
+    }
+}
+
+void BoundingBallsSimulation::resolveCollision(Ball2D &ball1, Ball2D &ball2)
+{
+    if(CheckCollisionCircles(ball1.position, ball1.radius, ball2.position, ball2.radius)){
+        // Normal and Tangential of Collision
+        float distance = ball1.getDistance(ball2);
+        Vector2 normal = { (ball2.position.x - ball1.position.x) / distance, (ball2.position.y - ball1.position.y) / distance };
+        Vector2 tangential = {- normal.y, normal.x };
+
+        // Normal speeds
+        float v1n = ball1.velocity.x * normal.x + ball1.velocity.y * normal.y;
+        float v2n = ball2.velocity.x * normal.x + ball2.velocity.y * normal.y;
+
+        if(v1n - v2n <= 0.0f)
+            return;
+
+        // Tangential speeds
+        float v1t = ball1.velocity.x * tangential.x + ball1.velocity.y * tangential.y;
+        float v2t = ball2.velocity.x * tangential.x + ball2.velocity.y * tangential.y;
+
+        float v1new = ((ball1.mass - ball2.mass)/(ball1.mass + ball2.mass)) * v1n + ((2.0f * ball2.mass)/(ball1.mass + ball2.mass)) * v2n;
+        float v2new = ((2.0f * ball1.mass)/(ball1.mass + ball2.mass)) * v1n + ((ball2.mass - ball1.mass)/(ball1.mass + ball2.mass)) * v2n;
+
+        Vector2 b1_new_norm_vel = { v1new * normal.x, v1new * normal.y};
+        Vector2 b2_new_norm_vel = { v2new * normal.x, v2new * normal.y};
+
+        // Note Tangential speeds remain unchanged
+        Vector2 b1_new_tan_vel = { v1t * tangential.x, v1t * tangential.y};
+        Vector2 b2_new_tan_vel = { v2t * tangential.x, v2t * tangential.y};
+
+        ball1.velocity = { b1_new_norm_vel.x + b1_new_tan_vel.x, b1_new_norm_vel.y + b1_new_tan_vel.y };
+        ball2.velocity = { b2_new_norm_vel.x + b2_new_tan_vel.x, b2_new_norm_vel.y + b2_new_tan_vel.y };
+
+        // Resolve superposition
+        float overlap = (ball1.radius + ball2.radius) - distance;
+
+        float ball1_part = (1.0f/ball1.mass)/((1.0f/ball1.mass) + (1.0f/ball2.mass));
+        float ball2_part = (1.0f/ball2.mass)/((1.0f/ball1.mass) + (1.0f/ball2.mass));
+
+        // Correct balls positions
+        ball1.position.x -= ball1_part * overlap * normal.x;
+        ball1.position.y -= ball1_part * overlap * normal.y;
+
+        ball2.position.x += ball2_part * overlap * normal.x;
+        ball2.position.y += ball2_part * overlap * normal.y;
     }
 }
