@@ -39,13 +39,17 @@ void Ball2D::updateVelocityWithGravitationalCenter(float dt, Vector2 gravitation
 {
     Vector2 dir = { gravitationalCenter.x - position.x, gravitationalCenter.y - position.y };
     float distanceSquared = dir.x * dir.x + dir.y * dir.y;
-    float distance = sqrtf(distanceSquared);
-
-    if (distance > 0.0f) {
-        float forceMagnitude = gravitationalConstant * mass / distanceSquared;
-        velocity.x += forceMagnitude * dir.x / distance * dt;
-        velocity.y += forceMagnitude * dir.y / distance * dt;
+    if (distanceSquared < 0.0001f) {
+        return;
     }
+
+    float distance = sqrtf(distanceSquared);
+    float gravityRange = 300.0f;
+    float distanceFactor = fminf(distance / gravityRange, 1.0f);
+    float forceMagnitude = gravitationalConstant * distanceFactor;
+
+    velocity.x += forceMagnitude * dir.x / distance * dt;
+    velocity.y += forceMagnitude * dir.y / distance * dt;
 }
 
 void Ball2D::updatePosition(float dt){

@@ -43,8 +43,13 @@ void BoundingBallsSimulation::clear()
 
 void BoundingBallsSimulation::update(float dt){
     // Update balls and correct for wall collisions
+
+    Vector2 gravitationalCenter = {screenWidth/2.0f, screenHeight/2.0f};
+    float gravitationalConstant = 20.0f; 
+
     for(std::size_t i = 0; i < balls.size(); i++){
-        balls[i].updateVelocity(dt);
+        //balls[i].updateVelocity(dt);
+        balls[i].updateVelocityWithGravitationalCenter(dt, gravitationalCenter, gravitationalConstant);
         balls[i].updatePosition(dt);
         checkForWallCollision(balls[i]);
     }
