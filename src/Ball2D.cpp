@@ -39,6 +39,8 @@ void Ball2D::updateVelocityWithGravitationalCenter(float dt, Vector2 gravitation
 {
     Vector2 dir = { gravitationalCenter.x - position.x, gravitationalCenter.y - position.y };
     float distanceSquared = dir.x * dir.x + dir.y * dir.y;
+
+    // Avoid division by zero and extremeyl high forces when close to center
     if (distanceSquared < 0.0001f) {
         return;
     }
@@ -50,6 +52,11 @@ void Ball2D::updateVelocityWithGravitationalCenter(float dt, Vector2 gravitation
 
     velocity.x += forceMagnitude * dir.x / distance * dt;
     velocity.y += forceMagnitude * dir.y / distance * dt;
+
+    // Daming due to drag
+    float damping = expf(-drag * dt);
+    velocity.x *= damping;
+    velocity.y *= damping;
 }
 
 void Ball2D::updatePosition(float dt){
