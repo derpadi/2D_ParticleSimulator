@@ -3,12 +3,13 @@
 
 #include <iostream>
 
+float Ball2D::gravity = 9.81f;
+
 Ball2D::Ball2D(
     Vector2 position, 
     Vector2 velocity, 
     float mass, 
-    float bounciness, 
-    float gravity, 
+    float bounciness,
     float radius, 
     Color color, 
     bool visible,
@@ -17,8 +18,7 @@ Ball2D::Ball2D(
 position(position), 
 velocity(velocity), 
 mass(mass), 
-bounciness(bounciness), 
-gravity(gravity), 
+bounciness(bounciness),
 radius(radius), 
 color(color), 
 visible(visible),
@@ -48,7 +48,7 @@ void Ball2D::updateVelocityWithGravitationalCenter(float dt, Vector2 gravitation
     float distance = sqrtf(distanceSquared);
     float gravityRange = 300.0f;
     float distanceFactor = fminf(distance / gravityRange, 1.0f);
-    float forceMagnitude = gravitationalConstant * distanceFactor;
+    float forceMagnitude = gravity * distanceFactor;
 
     velocity.x += forceMagnitude * dir.x / distance * dt;
     velocity.y += forceMagnitude * dir.y / distance * dt;

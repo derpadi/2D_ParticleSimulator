@@ -6,7 +6,7 @@ struct Ball2D {
     Vector2 velocity;
 
     float bounciness;
-    float gravity;
+    static float gravity;
     float radius;
     float mass = 1.0f; // Mass in kg, used for collision calculations
     float drag = 0.0f;
@@ -19,8 +19,7 @@ struct Ball2D {
         Vector2 position, 
         Vector2 velocity, 
         float mass = 1.0f,
-        float bounciness = 1.0f, 
-        float gravity = 9.81, 
+        float bounciness = 1.0f,
         float radius = 10.0f, 
         Color color = RED, 
         bool visible = true,

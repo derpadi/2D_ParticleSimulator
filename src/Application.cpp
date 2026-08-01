@@ -34,7 +34,7 @@ Application::Application(int width, int height)
     input.onLeftClick = [this](Vector2 mousePos){
         if(input.isArmed()){
             input.cooldown = 1.0/input.interval;
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true, currentBallDrag);
         }
     };
 
@@ -64,7 +64,7 @@ Application::Application(int width, int height)
     input.onLeftHold = [this](Vector2 mousePos, float dt){
         input.cooldown -= dt;
         if(input.cooldown <= 0.0f && input.isArmed()){
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, 9.81f, currentBallSize, getColor(), true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true, currentBallDrag);
             input.cooldown = 1.0f/input.interval;
         }
     };

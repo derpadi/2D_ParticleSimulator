@@ -17,9 +17,9 @@ void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float 
     balls.push_back(ball);
 }
 
-void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float gravity, float size, Color color, bool vis, float drag)
+void BoundingBallsSimulation::addBall(Vector2 position, Vector2 velocity, float mass, float bounciness, float size, Color color, bool vis, float drag)
 {
-    Ball2D ball = Ball2D(position, velocity, mass, bounciness, gravity, size, color, vis, drag);
+    Ball2D ball = Ball2D(position, velocity, mass, bounciness, size, color, vis, drag);
     balls.push_back(ball);
 }
 
@@ -33,7 +33,7 @@ void BoundingBallsSimulation::addBallRandom(uint32_t amount, float mass, float s
     std::uniform_real_distribution<float> velDist(-50.0f, 50.0f);
 
     for(uint32_t i = 0; i < amount; i++)
-        balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, mass, 1.0f, 0.0f, size, RED, true));
+        balls.push_back(Ball2D({distX(gen), distY(gen)}, {velDist(gen), velDist(gen)}, mass, 1.0f, size, RED, true));
 }
 
 void BoundingBallsSimulation::clear()
