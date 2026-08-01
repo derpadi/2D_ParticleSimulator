@@ -1,16 +1,17 @@
 #include "InputHandler.h"
 
-void InputHandler::update(float dt)
+Vector2 InputHandler::update(float dt)
 {
+    Vector2 mousePos = GetMousePosition();
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
         if(onLeftClick){
-            onLeftClick(GetMousePosition());
+            onLeftClick(mousePos);
         }
     }
 
     if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
         if(onLeftHold){
-            onLeftHold(GetMousePosition(), dt);
+            onLeftHold(mousePos, dt);
         }
     }
 
@@ -43,5 +44,6 @@ void InputHandler::update(float dt)
             onCPressed();
         }
     }
-
+    
+    return mousePos;
 }

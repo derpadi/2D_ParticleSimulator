@@ -41,7 +41,7 @@ void BoundingBallsSimulation::clear()
     balls.clear();
 }
 
-void BoundingBallsSimulation::update(float dt){
+void BoundingBallsSimulation::update(float dt, Vector2 &mousePos, bool mouseGravity){
     // Update balls and correct for wall collisions
 
     Vector2 gravitationalCenter = {screenWidth/2.0f, screenHeight/2.0f};
@@ -49,7 +49,9 @@ void BoundingBallsSimulation::update(float dt){
 
     for(std::size_t i = 0; i < balls.size(); i++){
         //balls[i].updateVelocity(dt);
-        balls[i].updateVelocityWithGravitationalCenter(dt, gravitationalCenter, gravitationalConstant);
+        mouseGravity ? balls[i].updateVelocityWithGravitationalCenter(dt, mousePos, gravitationalConstant) : balls[i].updateVelocity(dt);
+
+        //balls[i].updateVelocityWithGravitationalCenter(dt, mousePos, gravitationalConstant);
         balls[i].updatePosition(dt);
         checkForWallCollision(balls[i]);
     }

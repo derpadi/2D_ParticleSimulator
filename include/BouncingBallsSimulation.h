@@ -32,8 +32,10 @@ public:
      * @brief Updates the simulation based on a time step. (1. Update ball-state/wall collisions, 2. Ball/Ball collisions, 3. Draw)
      * 
      * @param dt The time step in seconds.
+     * @param mousePos The current mouse position.
+     * @param mouseGravity Whether mouse gravity is enabled.
      */
-    void update(float dt);
+    void update(float dt, Vector2 &mousePos, bool mouseGravity);
 
     /**
      * @brief Gets the number of balls in the simulation.

@@ -20,8 +20,9 @@ public:
     /**
      * @brief Updates the input handler based on the time step.
      * @param dt The time step in seconds.
+     * @return The current mouse position as a Vector2.
      */
-    void update(float dt);
+    Vector2 update(float dt);
 
     /**
      * @brief Toggles the armed state. (Arming mouse interaction)

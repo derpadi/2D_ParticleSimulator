@@ -78,9 +78,9 @@ void Application::run()
         BeginDrawing();
         ClearBackground(DARKGRAY);
 
-        input.update(dt);
+        Vector2 mousePos = input.update(dt);
 
-        sim.update(dt);
+        sim.update(dt, mousePos, mouseGravity);
 
         DrawFPS(0,0);
 
