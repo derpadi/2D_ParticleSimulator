@@ -18,6 +18,7 @@ private:
 
     bool rainbowMode = true;
     bool mouseGravity = false;
+    bool ballCollisions = true;
 
     /**
      * @brief Draws the UI (ImGui) elements on the screen.

@@ -20,6 +20,7 @@ void Application::drawUI()
     ImGui::SliderFloat("Friction", &Ball2D::drag, 0, 10);
     ImGui::SliderFloat("Gravity", &Ball2D::gravity, -20, 20);
     ImGui::Checkbox("Rainbow Mode", &rainbowMode);
+    ImGui::Checkbox("Ball Collisions", &ballCollisions);
     ImGui::Checkbox("Mouse Gravity", &mouseGravity);
     ImGui::End();
     rlImGuiEnd();
@@ -81,7 +82,7 @@ void Application::run()
 
         Vector2 mousePos = input.update(dt);
 
-        sim.update(dt, mousePos, mouseGravity);
+        sim.update(dt, mousePos, mouseGravity, ballCollisions);
 
         DrawFPS(0,0);
 

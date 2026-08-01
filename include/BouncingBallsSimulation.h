@@ -34,8 +34,9 @@ public:
      * @param dt The time step in seconds.
      * @param mousePos The current mouse position.
      * @param mouseGravity Whether mouse gravity is enabled.
+     * @param ballCollisions Whether ball collisions are enabled.
      */
-    void update(float dt, Vector2 &mousePos, bool mouseGravity);
+    void update(float dt, Vector2 &mousePos, bool mouseGravity, bool ballCollisions);
 
     /**
      * @brief Gets the number of balls in the simulation.
