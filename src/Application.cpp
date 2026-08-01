@@ -12,12 +12,13 @@ void Application::drawUI()
     } else {
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "DISARMED");
     }
-    ImGui::SliderFloat("Ballsize", &currentBallSize, 0, 100);
+    ImGui::SliderFloat("Ballsize", &currentBallSize, 0.4, 100);
     ImGui::SliderFloat("Mass", &currentBallMass, 0, 100);
     ImGui::SliderFloat("Speed(x)", &currentBallVx, -20, 20);
     ImGui::SliderFloat("Speed(y)", &currentBallVy, -20, 20);
     ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
     ImGui::SliderFloat("Friction", &currentBallDrag, 0, 10);
+    ImGui::SliderFloat("Gravity", &Ball2D::gravity, -20, 20);
     ImGui::Checkbox("Rainbow Mode", &rainbowMode);
     ImGui::Checkbox("Mouse Gravity", &mouseGravity);
     ImGui::End();
