@@ -4,6 +4,7 @@
 #include <iostream>
 
 float Ball2D::gravity = 9.81f;
+float Ball2D::drag = 0.0f;
 
 Ball2D::Ball2D(
     Vector2 position, 
@@ -12,8 +13,7 @@ Ball2D::Ball2D(
     float bounciness,
     float radius, 
     Color color, 
-    bool visible,
-    float drag)
+    bool visible)
 :
 position(position), 
 velocity(velocity), 
@@ -21,8 +21,7 @@ mass(mass),
 bounciness(bounciness),
 radius(radius), 
 color(color), 
-visible(visible),
-drag(drag)
+visible(visible)
 {
 }
 

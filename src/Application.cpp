@@ -17,7 +17,7 @@ void Application::drawUI()
     ImGui::SliderFloat("Speed(x)", &currentBallVx, -20, 20);
     ImGui::SliderFloat("Speed(y)", &currentBallVy, -20, 20);
     ImGui::SliderFloat("Spawnrate", &input.interval, 0, 100);
-    ImGui::SliderFloat("Friction", &currentBallDrag, 0, 10);
+    ImGui::SliderFloat("Friction", &Ball2D::drag, 0, 10);
     ImGui::SliderFloat("Gravity", &Ball2D::gravity, -20, 20);
     ImGui::Checkbox("Rainbow Mode", &rainbowMode);
     ImGui::Checkbox("Mouse Gravity", &mouseGravity);
@@ -35,7 +35,7 @@ Application::Application(int width, int height)
     input.onLeftClick = [this](Vector2 mousePos){
         if(input.isArmed()){
             input.cooldown = 1.0/input.interval;
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true);
         }
     };
 
@@ -65,7 +65,7 @@ Application::Application(int width, int height)
     input.onLeftHold = [this](Vector2 mousePos, float dt){
         input.cooldown -= dt;
         if(input.cooldown <= 0.0f && input.isArmed()){
-            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true, currentBallDrag);
+            sim.addBall(mousePos, { currentBallVx, currentBallVy }, currentBallMass, 1.0f, currentBallSize, getColor(), true);
             input.cooldown = 1.0f/input.interval;
         }
     };
